@@ -46,15 +46,21 @@ sqlcmd -S localhost -U sa  -P Xmas2017
 #	On Windows
 # docker exec -it logansql2017 sqlcmd -S. -Ulogansa
 
+<#
 
+1.	CREATE A DATABASE PRE-BUILT IMAGE VIA DOCKERFILE
+
+#>
 
 <################################
 # how to create a dockerfile
 #################################>
 # need a folder to house the files I’ll be creating for my image. 
+mkdir C:\logan\test
+
 # There will be a total of four because I’m going to separate specific tasks into different files to keep things organized:
 
-# 1. SqlCmdScript.Sql: This file will hold the TSQL script with the commands for creating the new database, table and data.
+# 1.1. SqlCmdScript.Sql: This file will hold the TSQL script with the commands for creating the new database, table and data.
 
 #	create database script
 create database logandb
@@ -69,14 +75,14 @@ go
 insert contact (name, phone, email) values ('Tom','416 5678890', 'tom.cry@gmail.com')
 go
 
-# 2. SqlCmdStartup.sh: This is a bash file (like a batch file for Linux). It starts up the sqlcmd command-line tool and, as part of the command, runs the SqlCmdScript.Sql file. Remember that sqlcmd is also part of the base image.
+# 1.2. SqlCmdStartup.sh: This is a bash file (like a batch file for Linux). It starts up the sqlcmd command-line tool and, as part of the command, runs the SqlCmdScript.Sql file. Remember that sqlcmd is also part of the base image.
 
 #wait for the SQL Server to come up
 sleep 20s
 #run the setup script to create the DB and the schema in the DB
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Xmas -d master -i SqlCmdScript.sql 
 
-# 3. Entrypoint.sh: This is another bash file. It lists the non-Docker tasks that need to run, 
+# 1.3. Entrypoint.sh: This is another bash file. It lists the non-Docker tasks that need to run, 
 #	and its first task is to execute the SqlCmdStartup.sh file. Then it will start the SQL Server process.
  
 #start the script to create the DB and data then start the sqlserver
@@ -91,7 +97,7 @@ In contrast, when I run the server startup second, the server is just a long-run
 therefore, Docker keeps the container running until something else tells it to stop.
 #>
 
-# 4. Dockerfile
+# 1.4. Dockerfile
 FROM microsoft/mssql-server-linux
 ENV SA_PASSWORD=Xmas2017
 ENV ACCEPT_EULA=Y
@@ -109,3 +115,56 @@ docker build -t logansqllinuximage .
 #
 
 docker run -d  -p 1433:1433  --name logansqllinux logansqllinuximage
+
+<#
+
+2.	CREATE A DATABASE VIA DOCKERFILE
+
+#>
+
+# create some sample databases to local host dir
+
+mkdir c:\logan\test\localdb
+
+# from sqlcmd on local host
+CREATE DATABASE [logandb1] ON  PRIMARY 
+( NAME = N'logandb1', FILENAME = N'c:\logan\test\localdb\logandb1.mdf' , SIZE = 3072KB , FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'logandb1_log', FILENAME = N'c:\logan\test\localdb\logandb1_log.ldf' , SIZE = 1024KB , FILEGROWTH = 10%)
+GO
+
+CREATE DATABASE [logandb2] ON  PRIMARY 
+( NAME = N'logandb2', FILENAME = N'c:\logan\test\localdb\logandb2.mdf' , SIZE = 3072KB , FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'logandb2_log', FILENAME = N'c:\logan\test\localdb\logandb2_log.ldf' , SIZE = 1024KB , FILEGROWTH = 10%)
+GO
+
+EXEC master.dbo.sp_detach_db @dbname = N'logandb1'
+GO
+EXEC master.dbo.sp_detach_db @dbname = N'logandb2'
+GO
+
+# notepad Dockerfile
+FROM microsoft/mssql-server-windows-developer
+ 
+# create directory within SQL container for database files
+RUN powershell -Command (mkdir C:\\SQLServer)
+ 
+#copy the database files from host to container
+COPY logandb1.mdf C:\\SQLServer
+COPY logandb1_log.ldf C:\\SQLServer
+ 
+COPY logandb2.mdf C:\\SQLServer
+COPY logandb2_log.ldf C:\\SQLServer
+ 
+# set environment variables
+ENV sa_password=Xmas2017
+ 
+ENV ACCEPT_EULA=Y
+ 
+ENV attach_dbs="[{'dbName':'logandb1','dbFiles':['C:\\SQLServer\\logandb1.mdf','C:\\SQLServer\\logandb1_log.ldf']},{'dbName':'logandb2','dbFiles':['C:\\SQLServer\\logandb2.mdf','C:\\SQLServer\\logandb1_log.ldf']}]"
+
+# 
+
+# Build the image
+docker build -t logandb .
