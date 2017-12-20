@@ -30,6 +30,7 @@
   <ItemGroup>
     <Compile Include="01_SQL_Docker_Setup.ps1" />
     <Compile Include="02_Docker_Database.ps1" />
+    <Compile Include="03_start.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
