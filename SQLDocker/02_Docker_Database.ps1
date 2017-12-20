@@ -48,7 +48,7 @@ sqlcmd -S localhost -U sa  -P Xmas2017
 
 <#
 
-1.	CREATE A DATABASE PRE-BUILT IMAGE VIA DOCKERFILE
+1.	CREATE A DATABASE PRE-BUILT IMAGE VIA DOCKERFILE BY RUNNING SQLCmdScript.sql
 
 #>
 
@@ -116,11 +116,11 @@ docker build -t logansqllinuximage .
 
 docker run -d  -p 1433:1433  --name logansqllinux logansqllinuximage
 
-<#
+<##################################################
 
-2.	CREATE A DATABASE VIA DOCKERFILE
+2.	CREATE A DATABASE VIA DOCKERFILE BY USING COPY
 
-#>
+####################################################>
 
 # create some sample databases to local host dir
 
@@ -148,7 +148,7 @@ GO
 FROM microsoft/mssql-server-windows-developer
  
 # create directory within SQL container for database files
-RUN powershell -Command (mkdir C:\\SQLServer)
+RUN powershell New-Item -ItemType directory -Path C:\\SQLServer
  
 #copy the database files from host to container
 COPY logandb1.mdf C:\\SQLServer
@@ -161,10 +161,45 @@ COPY logandb2_log.ldf C:\\SQLServer
 ENV sa_password=Xmas2017
  
 ENV ACCEPT_EULA=Y
- 
-ENV attach_dbs="[{'dbName':'logandb1','dbFiles':['C:\\SQLServer\\logandb1.mdf','C:\\SQLServer\\logandb1_log.ldf']},{'dbName':'logandb2','dbFiles':['C:\\SQLServer\\logandb2.mdf','C:\\SQLServer\\logandb1_log.ldf']}]"
+# This one doesn't work 
+# ENV attach_dbs="[{'dbName':'logandb1','dbFiles':['C:\\SQLServer\\logandb1.mdf','C:\\SQLServer\\logandb1_log.ldf']},{'dbName':'logandb2','dbFiles':['C:\\SQLServer\\logandb2.mdf','C:\\SQLServer\\logandb1_log.ldf']}]"
 
 # 
 
 # Build the image
 docker build -t logandb .
+# Start and Tag the image
+docker run -d -p 1433:1433 --name logandb logandb
+
+# Troubleshoot
+docker logs -f 6522e32ba0ea
+
+# connect to the container using powershell, and check the database files just copied.
+docker exec -it logandb powershell
+dir c:\SQLServer
+# connect to the container using sqlcmd
+docker exec -it logandb sqlcmd
+
+# Attached the databses
+EXEC sp_attach_db @dbname = N'logandb1', 
+    @filename1 = 
+N'C:\SQLServer\logandb1.mdf', 
+    @filename2 = 
+N'C:\SQLServer\logandb1_log.ldf'
+go
+EXEC sp_attach_db @dbname = N'logandb2', 
+    @filename1 = 
+N'C:\SQLServer\logandb2.mdf', 
+    @filename2 = 
+N'C:\SQLServer\logandb2_log.ldf'
+go
+select name rfom sys.databses
+go
+
+# HOUSEKEEP
+docker ps
+docker stop logandb
+
+docker ps -a
+docker rm 6522e32ba0ea
+
