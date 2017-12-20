@@ -1,5 +1,5 @@
 #
-#	Create/copy/attach databases in a container images using sqlcmd scripting
+#	Create/copy/attach databases in a container images using sqlcmd scripting / docker volume attached
 #	02_Docker_Database.ps1
 #
 
@@ -157,3 +157,11 @@ docker stop logandb
 docker ps -a
 docker rm 6522e32ba0ea
 
+
+<###################################################
+3) Using Docker Volume and ATTACH_DBS
+###################################################>
+# How about this? 
+# https://hub.docker.com/r/microsoft/mssql-server-windows-developer/
+
+docker run -d -p 1433:1433 -e sa_password=Xmas2017 -e ACCEPT_EULA=Y -v C:/temp/:C:/temp/ -e attach_dbs="[{'dbName':'SampleDb','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.ldf']}]" --name thirdsql microsoft/mssql-server-windows-developer
