@@ -2,7 +2,7 @@
 # 01_SQL_Docker_Setup.ps1
 #
 <#
-Steps to setup the first Microsoft SQL 2017 container and how to connect to it
+Steps to setup the first Microsoft SQL 2017 container and how to connect to it, start/stop, change instance name etc
 https://hub.docker.com/r/microsoft/mssql-server-windows-developer/
 #>
 
@@ -23,6 +23,12 @@ docker run -d -p 1433:1433 -e sa_password=Xmas2017 -e ACCEPT_EULA=Y --name First
 
 # Inspect it
 docker inspect FirstSQL2017 
+
+docker ps
+
+docker ps -a
+
+docker images
 
 <#################################################
 # How to connect to SQL container in SSMS/ sqlcmd
@@ -88,4 +94,9 @@ docker exec -it FirstSQL2017 sqlcmd
 # YES.
 select @@servername
 
+# Docker Log
+docker logs -f FirstSQL2017
 
+# To remove the container / image
+docker stop FirstSQL2017
+docker rm FirstSQL2017
