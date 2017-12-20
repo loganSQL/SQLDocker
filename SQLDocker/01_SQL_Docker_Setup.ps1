@@ -13,7 +13,7 @@ https://hub.docker.com/r/microsoft/mssql-server-windows-developer/
 docker search microsoft/mssql
 
 # Get the images if you want
-docker pull microsoft/mssql-server-windows-express
+docker pull microsoft/mssql-server-windows-developer
 
 # What you have locally
 docker images
