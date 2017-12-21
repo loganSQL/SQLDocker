@@ -1,9 +1,9 @@
-﻿# test
+﻿# 
 # 01_SQL_Docker_Setup.ps1
 #
 
 <#
-Steps to setup the first Microsoft SQL 2017 container and how to connect to it, start/stop, change instance name etc
+
 https://hub.docker.com/r/microsoft/mssql-server-windows-developer/
 #>
 
