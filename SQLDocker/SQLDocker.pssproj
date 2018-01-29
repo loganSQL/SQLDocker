@@ -32,6 +32,7 @@
     <Compile Include="02_Docker_Database.ps1" />
     <Compile Include="03_start.ps1" />
     <Compile Include="04_Docker_Commands.ps1" />
+    <Compile Include="06_Docker_Client_Windows.ps1" />
     <Compile Include="05_Portainer.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
