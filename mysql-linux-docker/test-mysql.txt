@@ -50,3 +50,29 @@ mysql> SHOW GLOBAL VARIABLES LIKE 'SOCKET';
 
 mysql> SHOW GLOBAL VARIABLES LIKE 'hostname';
 mysql> show variables like 'skip%';
+
+mysql> create database logandb;
+#-- testuser @ localhost
+mysql> create user 'testuser'@'localhost' identified by 'testuser';
+#-- testuser from all the hosts
+mysql> create user 'testuser'@'%' identified by 'testuser';
+#-- all permission on all database
+mysql> grant all on *.* to 'testuser'@'localhost';
+mysql> grant all on *.* to 'testuser'@'%';
+#
+--grant all on logandb.* to 'testuser'@'%';
+mysql> select host,user from mysql.user;
++-----------+---------------+
+| host      | user          |
++-----------+---------------+
+| %         | root          |
+| %         | testuser      |
+| localhost | mysql.session |
+| localhost | mysql.sys     |
+| localhost | root          |
+| localhost | testuser      |
++-----------+---------------+
+
+#---- from another host WSL
+mysql -utestuser -h MYHOST -p
+
