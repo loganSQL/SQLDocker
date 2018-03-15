@@ -1,0 +1,52 @@
+##################################
+# Docker Image / Container Build
+###################################
+
+PS C:\logan\test\mysqldocker> docker pull mysql
+
+## Mapping container port to host port
+## disable virus checking like endpoint encryption software if needed
+docker run -d -p 3306:3306 --name=test-mysql --env="MYSQL_ROOT_PASSWORD=Xmas2017" mysql
+
+docker logs test-mysql
+
+docker inspect test-mysql | findstr "IPAddress"
+
+docker stop test-mysql
+
+docker start test-mysql
+
+####################################
+# Connect and Test
+####################################
+#---Direct on Container ----------
+
+docker exec test-mysql cat /etc/hosts
+
+docker exec -it test-mysql bash
+
+root@d61359c8e3b3:/# which mysql
+/usr/bin/mysql
+
+root@d61359c8e3b3:/# mysql -uroot -pXmas2017
+
+root@d61359c8e3b3:/# cat /etc/mysql/mysql.conf.d/mysqld.cnf
+
+# add the following line to allow listen to all ips
+# for remote connection from another host
+root@9a719b54cee9:/# echo 'bind-address   = 0.0.0.0' >> /etc/mysql/mysql.conf.d/mysqld.cnf
+
+#------------ wsl -----------------
+
+sudo apt-get install mysql-client
+
+logan@TORFN-L812:/mnt/c/logan$ mysql -uroot -h MYHOST -p
+
+mysql> select version();
+
+mysql> SHOW GLOBAL VARIABLES LIKE 'PORT';
+
+mysql> SHOW GLOBAL VARIABLES LIKE 'SOCKET';
+
+mysql> SHOW GLOBAL VARIABLES LIKE 'hostname';
+mysql> show variables like 'skip%';
