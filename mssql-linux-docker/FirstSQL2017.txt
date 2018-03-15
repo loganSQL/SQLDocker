@@ -1,0 +1,81 @@
+####################################
+# Pull image / Build Container
+####################################
+
+docker version
+
+docker search microsoft/mssql
+
+docker pull microsoft/mssql-server-linux
+
+docker run -d -p 1433:1433 -e 'SA_PASSWORD=Xmas2017' -e 'ACCEPT_EULA=Y' --name FirstSQL2017 microsoft/mssql-server-linux
+
+docker inspect FirstSQL2017 | findstr 'IPAddress'
+
+#################################
+# Connection
+#################################
+-- 1. Go to container directly
+docker exec -it FirstSQL2017 bash
+
+root@722472b6fbab:/# /opt/mssql-tools/bin/sqlcmd -S localhost -Usa
+
+-- 2. On windows
+Hostname
+
+SSMS Hostname sa 
+
+-- 3. WSL
+logan@MYHOST:/mnt/c/logan/git/SQLDocker/mssql-linux-docker$ which sqlcmd
+/opt/mssql-tools/bin//sqlcmd
+logan@MYHOST:/mnt/c/logan/git/SQLDocker/mssql-linux-docker$ sqlcmd -Usa
+Password: 1>
+2> select @@version, @@servername
+3> go
+                                                                                                                                                                                                                                                                                                                                                                        
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ --------------------------------------------------------------------------------------------------------------------------------
+Microsoft SQL Server 2017 (RTM-CU4) (KB4056498) - 14.0.3022.28 (X64)
+        Feb  9 2018 19:39:09
+        Copyright (C) 2017 Microsoft Corporation
+        Developer Edition (64-bit) on Linux (Ubuntu 16.04.3 LTS)                                                                                                             722472b6fbab                                                       
+
+(1 rows affected)
+
+###################################
+# Admin / Config
+###################################
+
+-- https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-troubleshooting-guide
+
+
+docker stop FirstSQL2017 
+
+
+-- enable HADR on Linux container
+docker exec -it FirstSQL2017 bash
+root@722472b6fbab:/# ls -l /opt/mssql/bin/mssql-conf
+-rwxrwxr-x 1 root root 1294 Feb 16 22:21 /opt/mssql/bin/mssql-conf
+root@722472b6fbab:/# /opt/mssql/bin/mssql-conf set hadr.hadrenabled  1
+exit
+
+-- enable HADR on Windows Container
+docker exec -it FirstSQL2017 powershell
+PS C:\> hostname
+6cdcf1e86ca8
+
+PS C:\> service|findstr SQL
+Running  MSSQLSERVER        SQL Server (MSSQLSERVER)
+Stopped  SQLBrowser         SQL Server Browser
+Stopped  SQLSERVERAGENT     SQL Server Agent (MSSQLSERVER)
+Running  SQLTELEMETRY       SQL Server CEIP service (MSSQLSERVER)
+Running  SQLWriter          SQL Server VSS Writer
+
+PS C:\> Enable-SqlAlwaysOn -ServerInstance "6cdcf1e86ca8"
+
+Enable AlwaysOn
+To complete this action, we must restart the SQL Server service for server
+instance '6cdcf1e86ca8'. Do you want to continue?
+[Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): y
+
+docker stop FirstSQL2017 
+
