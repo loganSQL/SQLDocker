@@ -1,0 +1,72 @@
+PS C:\logan\git\SQLDocker\mongo-linux-docker> docker pull mongo
+Using default tag: latest
+latest: Pulling from library/mongo
+b0568b191983: Pull complete
+1e8b5b4e67a0: Pull complete
+a87b29dbb553: Pull complete
+908c259a6a99: Pull complete
+2fdec16e62a3: Pull complete
+e233c6c476cb: Pull complete
+671c302f3b40: Pull complete
+207ff3c88601: Pull complete
+3a7998bea9fd: Pull complete
+18d605d67f26: Pull complete
+Digest: sha256:d969194a7c4dcd817cae5dc726b1493547a3ad3f1b30f7f58857adc9ae6a4483
+Status: Downloaded newer image for mongo:latest
+PS C:\logan\git\SQLDocker\mongo-linux-docker> docker images
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+postgres                       latest              30121e967865        26 hours ago        289MB
+mysql                          latest              5195076672a7        35 hours ago        371MB
+mongo                          latest              5b1317f8158f        37 hours ago        366MB
+microsoft/mssql-server-linux   latest              ab22b8353bbd        3 weeks ago         1.42GB
+PS C:\logan\git\SQLDocker\mongo-linux-docker> docker run -p 27017:27017 --name test-mongo -d mongo
+b258a8f397141dfa8accdd9cebd743184fb8d9293c8e02ad072a65c3245c009b
+PS C:\logan\git\SQLDocker\mongo-linux-docker> docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+b258a8f39714        mongo               "docker-entrypoint.s…"   12 seconds ago      Up 11 seconds       0.0.0.0:27017->27017/tcp   test-mongo
+PS C:\logan\git\SQLDocker\mongo-linux-docker> docker exec -it test-mongo bash
+root@b258a8f39714:/# ps -ef|grep mongo
+mongodb       1      0  0 19:06 ?        00:00:01 mongod --bind_ip_all
+root         43     37  0 19:10 pts/0    00:00:00 grep mongo
+root@b258a8f39714:/# mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        http://docs.mongodb.org/
+Questions? Try the support group
+        http://groups.google.com/group/mongodb-user
+Server has startup warnings:
+2018-03-15T19:06:49.053+0000 I STORAGE  [initandlisten]
+2018-03-15T19:06:49.053+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2018-03-15T19:06:49.053+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2018-03-15T19:06:49.740+0000 I CONTROL  [initandlisten]
+2018-03-15T19:06:49.740+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-03-15T19:06:49.740+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-03-15T19:06:49.740+0000 I CONTROL  [initandlisten]
+>
+...
+#---- WSL : Install mongodb-clients
+logan@MYHOST:/mnt/c/logan/git/SQLDocker/postgres-linux-docker$ mongo
+The program 'mongo' is currently not installed. You can install it by typing:
+sudo apt install mongodb-clients
+logan@MYHOST:/mnt/c/logan/git/SQLDocker/postgres-linux-docker$ sudo apt install mongodb-clients
+...
+logan@MYHOST:/mnt/c/logan/git/SQLDocker/mongo-linux-docker$ which mongo
+/usr/bin/mongo
+logan@MYHOST:/mnt/c/logan/git/SQLDocker/mongo-linux-docker$ mongo MYHOST:27017
+...
+
+#---- With datavol
+# create a share \test-mongo on C:\logan\data\test-mongo
+PS C:\logan\git\SQLDocker\mongo-linux-docker> docker run -p 27017:27017 --name test-mongo-datavol -v \test-mongo:/data/d -d mongo
+9768a8195cf3d828678025c922c49314c9f41d7b603821d9b23b6cbd857e2bf3
+PS C:\logan\git\SQLDocker\mongo-linux-docker> docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+9768a8195cf3        mongo               "docker-entrypoint.s…"   10 seconds ago      Up 9 seconds        0.0.0.0:27017->27017/tcp   test-mongo-datavol
+
+
+
+
