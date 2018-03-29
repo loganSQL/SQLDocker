@@ -149,7 +149,9 @@ Uptime:                 2 hours 30 min 19 sec
 Threads: 1  Questions: 52  Slow queries: 0  Opens: 110  Flush tables: 1  Open tables: 103  Queries per second avg: 0.005
 ```
 
-### test from PHP: dbconfig.php
+### test from PHP to mysqldb
+
+[dbconfig.php](<https://github.com/loganSQL/SQLDocker/blob/master/mysql-linux-docker/dbconfig.php>)
 ```
 <?php
 $username="testuser";
@@ -159,7 +161,8 @@ $host="mysqldb"
 ?>
 ```
 
-[http://localhost/PDOMySQLTest1.php](http://localhost/PDOMySQLTest1.php) [sourcecode](<https://github.com/loganSQL/SQLDocker/blob/master/mysql-linux-docker/PDOMySQLTest1.php>)
+[http://localhost/PDOMySQLTest1.php](http://localhost/PDOMySQLTest1.php) 
+[PHP sourcecode: PDOMySQLTest1.php](<https://github.com/loganSQL/SQLDocker/blob/master/mysql-linux-docker/PDOMySQLTest1.php>)
 
 Verify the mysql
 ```
