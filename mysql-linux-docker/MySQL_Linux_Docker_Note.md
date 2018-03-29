@@ -73,6 +73,9 @@ mysql -utestuser -h REMOTE_HOST -p
 ```
 
 ## Link to container test-mysql as mysqldb
+
+Refer to image build: [logansql/linux-apache-php-ext](<https://github.com/loganSQL/SQLPRO/blob/master/SqlApachePHP/Linux-Apache-PHP-mysql-docker-notes.md>)
+
     docker stop test-mysql
     docker ps
     docker rm test-apache-php
@@ -160,9 +163,10 @@ $dbname="logandb";
 $host="mysqldb"
 ?>
 ```
+[PDOMySQLTest1.php](<https://github.com/loganSQL/SQLDocker/blob/master/mysql-linux-docker/PDOMySQLTest1.php>)
 
-[http://localhost/PDOMySQLTest1.php](http://localhost/PDOMySQLTest1.php) 
-[PHP sourcecode: PDOMySQLTest1.php](<https://github.com/loganSQL/SQLDocker/blob/master/mysql-linux-docker/PDOMySQLTest1.php>)
+Browser Test: [http://localhost/PDOMySQLTest1.php](http://localhost/PDOMySQLTest1.php) 
+
 
 Verify the mysql
 ```
