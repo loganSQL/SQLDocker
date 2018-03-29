@@ -65,4 +65,5 @@
 
 ## References
 [SQL Server on Linux](<https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-overview>)
+
 [Configure SQL Server on Linux with the mssql-conf tool](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-mssql-conf)
