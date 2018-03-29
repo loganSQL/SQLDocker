@@ -1,4 +1,4 @@
-# Microsoft SQL Server Docker Note
+# Microsoft SQL Server Linux Docker Note
 
 ## Pull image / Build Container
     # pull image
