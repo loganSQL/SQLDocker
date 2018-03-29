@@ -72,7 +72,7 @@ mysql> select host,user from mysql.user;
 mysql -utestuser -h REMOTE_HOST -p
 ```
 
-## Link to container test-mysql as mysql
+## Link to container test-mysql as mysqldb
     docker stop test-mysql
     docker ps
     docker rm test-apache-php
@@ -149,7 +149,7 @@ Uptime:                 2 hours 30 min 19 sec
 Threads: 1  Questions: 52  Slow queries: 0  Opens: 110  Flush tables: 1  Open tables: 103  Queries per second avg: 0.005
 ```
 
-### dbconfig.php
+### test from PHP: dbconfig.php
 ```
 <?php
 $username="testuser";
