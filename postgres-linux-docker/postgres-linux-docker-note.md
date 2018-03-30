@@ -55,13 +55,13 @@
     CREATE ROLE logan PASSWORD 'md55584469c41de154756016406355ac4a0' SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;
     
     # -- 2. create a database logan (wsl)
-    $ psql -U logan -h MYHOST postgres
-    CREATE DATABASE logan;
+    $ psql -U logan -h localhost postgres
+    CREATE DATABASE testdb;
     
     # -- 3. create another user testuser
-    \c logan;
+    \c testdb;
     create user testuser with password 'testuser';
-    GRANT ALL PRIVILEGES ON DATABASE logan to testuser;
+    GRANT ALL PRIVILEGES ON DATABASE testdb to testuser;
     desc user
     \du
     select * from pg_shadow;
@@ -72,3 +72,5 @@
     # -- USER / PERMISSION ADMIN
     SELECT version();
 
+## test remote user (from host wsl)
+    psql -U testuser -h localhost -d testdb
