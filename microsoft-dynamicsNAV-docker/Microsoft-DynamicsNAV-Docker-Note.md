@@ -83,6 +83,15 @@ F50071CBE75E\SQLEXPRESS                                                         
 (1 rows affected)
 1>
 ```
+## Take A Look Inside
+
+    docker exec -it FirstNAV2018 cmd
+    C:\>systeminfo
+    C:\>Wmic product get name /value
+    C:\>ipconfig /all
+    docker stop FirstNAV2018
+    docker start FirstNAV2018
+
 ## Specify username and password for your NAV SUPER user 
     -e username=username -e password=password
     # Example (docker command line)
