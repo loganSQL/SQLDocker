@@ -68,3 +68,24 @@ Here is an overview of key commands and utilities you’ll use for managing serv
 **Wmic qfe list** - List installed updates and hotfixes.
 
 **Wusa.exe PatchName.msu /quiet**- Apply an update or hotfix to the operating system.
+
+## Docker Container Administration
+
+### CMD
+
+    docker exec -it FirstNAV2018 cmd
+
+### Powershell
+
+    docker exec -it FirstNAV2018 powershell
+
+### Administrator Powershell ISE
+
+    # Start Windows Powershell ISE as Administrator
+    Enter-PSSession -ContainerId (docker ps --no-trunc -qf "name=FirstNAV2018")
+    
+    # or 
+    Enter-NavContainer FirstNAV2018
+    
+    # Using ISE as an editor
+    psedit yourfileinsidecontainer.ps1

@@ -211,7 +211,11 @@ To use Windows authentication, etc. etc.
 ## References
 [NAV Docker Container Image](<https://github.com/loganSQL/SQLDocker/blob/master/microsoft-dynamicsNAV-docker/NAV%20Docker%20Image.docx>)
 
-[Hands-On Lab: NAV on Docker](<https://github.com/loganSQL/SQLDocker/blob/master/microsoft-dynamicsNAV-docker/NAV%20on%20Docker%20HOL.docx>)
+[Hands-On Lab: NAV on Docker](https://github.com/Microsoft/nav-docker)
+
+[Microsoft/nav-docker](<https://github.com/microsoft/navcontainerhelper>)
+
+[Microsoft/navcontainerhelper](<https://github.com/microsoft/navcontainerhelper>)
 
     
     
