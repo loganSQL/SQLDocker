@@ -45,7 +45,7 @@
     #
     echo $env:COMPUTERNAME
     
-## Run ISE as Administrator like notepad.exe
+## Run ISE as Administrator (remote session to container in ps)
     Enter-PSSession -ContainerId (docker ps --no-trunc -qf "name=FirstSQL2017")
 
     [4f8bf7c00997...]: PS C:\Users\ContainerUser\Documents>cd \
