@@ -78,7 +78,7 @@
     
     [4f8bf7c00997...]: PS C:\> psedit test.txt
     
-# Connect-Container.ps1
+# [Connect-Container.ps1](<https://github.com/loganSQL/SQLDocker/blob/master/SQLDocker/Connect-Container.ps1>)
     <#
       Connect-Container
             By Logan SQL
