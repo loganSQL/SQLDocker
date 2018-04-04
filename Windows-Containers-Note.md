@@ -46,3 +46,17 @@ ENTRYPOINT ["dotnet", "MvcMovie.dll"]
     docker run -d -p 5000:80 --name myapp myasp
     docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" myapp
     # 5. go to browser
+    start http://localhost:5000
+
+### What is 'Docker for Windows'?
+**Docker for Windows.exe** is basically a “manager app” the does several things:
+* It sets up a “Hyper-V VM” named: MobyLinuxVM, which contains a minimal linux system, that is able to run docker containers.
+* If you start your: Hyper-V Manager program, you’ll be able to see it.
+* If started, it shows up at the bottom right app toolbar with the “Docker Moby Icon”
+
+[Docker For Windows Forum](<https://forums.docker.com/c/docker-for-windows>)
+
+[Run Linux and Windows Containers In Parallel](<https://stefanscherer.github.io/run-linux-and-windows-containers-on-windows-10/>)
+
+
+
