@@ -13,7 +13,7 @@
     
     # don't download any image first
     
-## manage docker service
+## Manage Docker Service
     # list all service 
     Get-WMIObject win32_service | Format-Table Name, StartMode -auto
     
@@ -40,7 +40,7 @@
     # docker.exe (docker cli client)
     cd "C:\Program Files\Docker
     
-## Change Docker root location
+## Change Docker Root Location
     # Add file daemon.json
     cd C:\ProgramData\Docker\config
     notepad daemon.json
@@ -55,7 +55,7 @@
       -g, --graph string                          Root of the Docker runtime (default "C:\\ProgramData\\docker")
  
     
- ##
+ ## Test an Image
 
     # Test docker naoserver
     docker container run hello-world:nanoserver
