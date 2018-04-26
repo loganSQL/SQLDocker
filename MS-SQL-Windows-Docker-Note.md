@@ -7,7 +7,7 @@
 ## Build Docker Container
     # host port 1533 => container port 1433
     # host file folder E:/databases/docker/ => container volume mounted C:/databases/
-    docker run -d -p 1533:1433 -e sa_password=April2018 -e ACCEPT_EULA=Y -v E:/databases/docker/:C:/databases/ --name MYSQL2017 microsoft/mssql-server-windows-developer
+    docker run -d -p 1533:1433 -e sa_password=April2018 -e ACCEPT_EULA=Y -v E:/databases/docker/:C:/databases/  -v E:/backup/docker/:C:/backup/ --name MYSQL2017 microsoft/mssql-server-windows-developer
     # for attached db
     #...-e attach_dbs="[{'dbName':'SampleDb','dbFiles':['C:\\databases\\sampledb.mdf','C:\\databases\\sampledb_log. ldf']}]"
 
