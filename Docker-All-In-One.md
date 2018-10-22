@@ -45,5 +45,5 @@ dockerfile
 # Docker Compose
 docker-compose.yml
 
-![docker-compose.yml](https://image.slidesharecdn.com/jenkinsperudockerecosystem-160210234611/95/jenkins-peru-meetup-docker-ecosystem-29-638.jpg?cb=1455148050)
+![docker-compose.yml](https://copex.io/wp-content/uploads/2015/12/docker-compose.png)
 <https://docs.docker.com/compose/>
