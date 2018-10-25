@@ -39,13 +39,202 @@ dockerfile
 
 ![dockerfile](https://www.sqlshack.com/wp-content/uploads/2017/04/word-image-60.png)
 
-<https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-docker/manage-windows-dockerfile>
-<https://www.sqlshack.com/running-sql-server-containers-windows-server-2016-core/>
+* <https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-docker/manage-windows-dockerfile>
+* [Example]<https://www.sqlshack.com/running-sql-server-containers-windows-server-2016-core/>
 
 # Docker Compose
 docker-compose.yml
 
 ![docker-compose.yml](https://copex.io/wp-content/uploads/2015/12/docker-compose.png)
 
-<https://docs.docker.com/compose/>
-<https://dbafromthecold.com/2017/07/12/creating-sql-server-containers-with-docker-compose/>
+* <https://docs.docker.com/compose/>
+* [Example](<https://dbafromthecold.com/2017/07/12/creating-sql-server-containers-with-docker-compose/>)
+
+
+# Container Hosts Preparation
+## On a Windows Server 2016 with Desktop Experience
+```
+## Powershell Admin
+Install-Module -Name DockerMSFTProvider -Repository PSGallery 
+Install-Package -Name docker -ProviderName DockerMsftProvider 
+start-Computer
+```
+## On a Windows Server 2016 Core 
+```
+sconfig 
+Choosing option 6 : Download and Install Updates
+All
+... update and restart...
+```
+## On a Windows 10 (Professional / Enterprise)
+```
+Enable-WindowsOptionalFeature -Online -FeatureName Container -All 
+Enable-WindowsOptionalFeautre -Online -FeatureName Microsoft-Hyper-V -All 
+Restart-Computer
+
+# Download Docker engine 
+# Install Docker Engine and Client
+```
+## On a Nano Server 
+Get an image from media
+
+# Containers
+## Deploying a base container image
+Microsoft supplies two base images: 
+• Server Core 
+```
+docker pull microsoft/iis:nanoserver
+docker images
+```
+• Nano Server
+```
+docker pull microsoft/windowsservercore 
+```
+
+## Running a sample container
+```
+docker run microsoft/dotnet-samples:dotnetapp-nanoserver 
+```
+
+## Container Commands
+
+### Help
+```
+docker <cmd> --help
+```
+### Container Lifecycle 
+```
+# Creates a container 
+docker create 
+
+# Renames a container
+docker rename 
+
+# Creates and runs a container 
+docker run 
+
+# Removes a container 
+docker rm Removes a container 
+
+# Updates a container resource limits
+docker update
+```
+
+### Container Starting / Stopping
+```
+# Starts a container
+docker start
+
+# Stops a container 
+docker stop 
+
+# Stops and starts a container 
+docker restart 
+
+# Pauses a running container
+docker pause  
+
+# Unpause a running container 
+docker unpause 
+
+# Blocks until running container stops 
+docker wait 
+
+# Sends a SIGKILL to a container 
+docker kill 
+
+# Connects to a running container 
+docker attach 
+```
+
+###  Container Resource constraints 
+```
+#
+# commands available to limit resources
+#
+# Sets the container to 50% usage of the available CPU cores The value 512 specifies 50%, whereas changing the value to 1024 specifies 100%
+#
+docker run --ti -–c 512 < containername > 
+
+#
+# Sets the container to use a specific number of cores 
+#
+docker run –ti -cpusetcpus=0,1,2  
+
+#
+# Sets the container to have a memory limit 
+#
+docker run -it -m 300M < container >  
+```
+
+## Container information 
+```
+#  Shows the running containers 
+docker ps
+
+#  Gets logs from a container
+docker logs 
+
+# Looks at all the information on a container 
+docker inspect
+
+#  Gets event information from a container 
+docker events
+
+#  Shows the public-facing port of a container 
+docker port
+
+# Shows running processes in a container 
+docker top
+
+# Shows the resource usage statistics for a container 
+docker stats
+
+#  Shows changed files in the containers file systems
+docker diff
+```
+
+### Images
+```
+#  Shows all the images on the container host
+docker images 
+
+#  Create an image from a Dockerfile 
+docker build
+
+#  Creates an image from a container
+docker commit 
+
+#  Remove an image from a container host
+docker rmi 
+
+#  Shows all the history of image
+docker history 
+
+#  Tags an image to a local host or registry
+docker tag 
+
+# Search the Docker Hub for an image 
+docker search
+```
+
+### Network
+```
+# Creates a network for a container
+docker network create 
+
+# Removes a network 
+docker network rm 
+
+# Lists all networks
+docker network ls 
+
+# Display all info in relation to the network
+docker network inspect
+
+#  Connects a container to a network 
+docker network connect
+
+#  Disconnects a container from a network
+docker network disconnect 
+```
