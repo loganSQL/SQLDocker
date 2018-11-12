@@ -4,8 +4,13 @@
 
 ```
 docker pull mcr.microsoft.com/mssql/server:vNext-CTP2.0-ubuntu
-
+```
+```
 docker images
+```
+```
+REPOSITORY                            TAG                   IMAGE ID            CREATED             SIZE
+mcr.microsoft.com/mssql/server        vNext-CTP2.0-ubuntu   bc2f72b4310f        7 weeks ago         1.7GB
 ```
 ```
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Xmas2019' -p 1433:1433  --name UbuntuSQL2019 -d mcr.microsoft.com/mssql/server:vNext-CTP2.0-ubuntu
