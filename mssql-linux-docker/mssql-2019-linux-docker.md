@@ -15,7 +15,7 @@ mcr.microsoft.com/mssql/server        vNext-CTP2.0-ubuntu   bc2f72b4310f        
 ```
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Xmas2019' -p 1433:1433  --name UbuntuSQL2019 -d mcr.microsoft.com/mssql/server:vNext-CTP2.0-ubuntu
 
-docker exec -it UbuntuSQL2019 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Xmas201
+docker exec -it UbuntuSQL2019 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Xmas2019
 ```
 ```
 1> select @@version
