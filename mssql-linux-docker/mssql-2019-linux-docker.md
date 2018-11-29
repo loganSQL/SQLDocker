@@ -29,7 +29,16 @@ Microsoft SQL Server vNext (CTP2.0) - 15.0.1000.34 (X64)
 
 (1 rows affected)
 ```
-
+```
+docker ps -a
+docker start Ubuntu2019
+docker ps
+docker ps -q
+docker port $(docker ps -q)
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(docker ps -q)
+hostname
+sqlcmd -S$(hostname) -Usa
+```
 ## SQL Server Red Hat Container 
 [SQL Server Red Hat Container](<https://access.redhat.com/containers/#/mcr.microsoft.com/mssql/rhel/server>)
 ```
