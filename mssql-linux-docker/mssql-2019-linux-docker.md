@@ -38,7 +38,10 @@ docker port $(docker ps -q)
 docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(docker ps -q)
 hostname
 sqlcmd -S$(hostname) -Usa
+docker exec -it  $(docker ps -q) bash
+
 ```
+[how to get container ip](<http://networkstatic.net/10-examples-of-how-to-get-docker-container-ip-address/>)
 ## SQL Server Red Hat Container 
 [SQL Server Red Hat Container](<https://access.redhat.com/containers/#/mcr.microsoft.com/mssql/rhel/server>)
 ```
