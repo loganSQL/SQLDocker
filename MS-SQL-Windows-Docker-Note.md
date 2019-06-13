@@ -18,7 +18,11 @@
     docker inspect MSSQL2017
     docker exec -it MSSQL2017 sqlcmd
     docker exec -it MSSQL2017 powershell
-    sqlcmd -Usa -S "localhost,1533"
+
+    $ContainerIP=docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' FirstSQL2017
+    sqlcmd -Usa -S $ContainerIP
+
+    sqlcmd -Usa -S $ContainerIP,1533
     
     # on other machine
     sqlcmd -Usa -S "YourHost,1533"
