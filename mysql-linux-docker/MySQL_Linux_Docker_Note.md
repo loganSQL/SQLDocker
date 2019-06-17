@@ -36,6 +36,8 @@
     sudo apt-get install mysql-client
     # connect using $(hostname) on linux host
     mysql -uroot -h$(hostname) -p
+    # sometimes, the DNS doesn't allow port mapping
+    mysql -uroot -h$(hostname) -P 3306 -p
     #
 ```
 mysql> select version();
