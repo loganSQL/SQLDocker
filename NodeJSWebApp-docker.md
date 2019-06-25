@@ -49,7 +49,8 @@ Running on http://0.0.0.0:8080
 ## Build a Docker image of your app.
 ### Dockerfile
 ```
-FROM node:8
+# based on https://hub.docker.com/_/node
+FROM node:8.9.3-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -78,10 +79,10 @@ npm-debug.log
 ### Docker Image
 ```
 # Build
-docker build -t logansql/node-web-app .
+docker build -t logansql/node-alphine .
 
 # Run
-docker run -p 55555:8080 -d --name test-node-web-app logansql/node-web-app
+docker run -p 55555:8080 -d --name test-node-alphine logansql/node-alphine
 
 # Get container ID
 $ docker ps
@@ -95,5 +96,12 @@ curl http://localhost:55555/
 start http://localhost:55555/
 # go inside
 docker exec -it test-node-web-app /bin/bash
-# 
+#
+# the image from 'FROM node:8.9.3-alpine' is tiny 70MB, 
+# default 'FROM node:8' is 897MB
+#
+docker images
+REPOSITORY                            TAG                   IMAGE ID            CREATED             SIZE
+logansql/node-alphine                 latest                49c4b7b2b458        14 seconds ago      70.1MB
+logansql/node-web-app                 latest                fd5fa3252fa7        2 hours ago         897MB
 ```
