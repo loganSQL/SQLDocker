@@ -17,7 +17,7 @@
 }
 ```
 
-run 'npm install' to generate package-lock.json
+'run npm install' to generate package-lock.json
 
 ### server.js: define a web app using Express.js framework
 ```
@@ -88,14 +88,14 @@ docker run -p 55555:8080 -d --name test-node-alphine logansql/node-alphine
 $ docker ps
 
 # Print app output
-$ docker logs test-node-web-app
+$ docker logs test-node-alphine
 
 # Check it out
 curl http://localhost:55555/
 # brower
 start http://localhost:55555/
 # go inside
-docker exec -it test-node-web-app /bin/bash
+docker exec -it test-node-alphine /bin/bash
 #
 # the image from 'FROM node:8.9.3-alpine' is tiny 70MB, 
 # default 'FROM node:8' is 897MB
