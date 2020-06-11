@@ -38,6 +38,8 @@ docker port $(docker ps -q)
 docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(docker ps -q)
 hostname
 sqlcmd -S$(hostname) -Usa
+Get-NetIPAddress|Where PrefixOrigin -EQ 'Dhcp'|select IPAddress
+sqlcmd -S TCP:192.168.1.111,1433 -U sa
 docker exec -it  $(docker ps -q) bash
 
 ```
